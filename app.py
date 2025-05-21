@@ -3,7 +3,7 @@ import numpy as np
 import skfuzzy as fuzz
 from skfuzzy import control as ctrl
 import matplotlib.pyplot as plt
-from fuzzy_parking_system import FuzzyParkingSystem
+from fuzzy_parking_system import ParkingGuidanceSystem
 
 st.set_page_config(page_title="Fuzzy Parking System", layout="wide")
 
@@ -13,37 +13,41 @@ st.title("Fuzzy Parking System Demo")
 st.sidebar.header("Input Parameters")
 
 # Input sliders
-distance = st.sidebar.slider("Distance to Parking Spot (meters)", 0, 10, 5)
-angle = st.sidebar.slider("Angle of Approach (degrees)", 0, 90, 45)
+traffic_density = st.sidebar.slider("Traffic Density (%)", 0, 100, 50)
+time_of_day = st.sidebar.slider("Time of Day (hours)", 0, 24, 12)
+weather_condition = st.sidebar.slider("Weather Condition (0-10)", 0, 10, 5)
+vacancy_rate = st.sidebar.slider("Vacancy Rate (%)", 0, 100, 50)
+user_type = st.sidebar.selectbox("User Type", [1, 2, 3, 4, 5], format_func=lambda x: {
+    1: "Regular",
+    2: "Member",
+    3: "VIP",
+    4: "Disabled",
+    5: "Staff"
+}[x])
 
 # Create fuzzy system
-fuzzy_system = FuzzyParkingSystem()
+fuzzy_system = ParkingGuidanceSystem()
 
-# Calculate steering angle
-steering_angle = fuzzy_system.calculate_steering_angle(distance, angle)
+# Get recommendation
+result = fuzzy_system.get_recommendation(
+    traffic_density, time_of_day, weather_condition, vacancy_rate, user_type
+)
 
 # Display results
 st.header("Results")
-st.write(f"Calculated Steering Angle: {steering_angle:.2f} degrees")
-
-# Create visualization
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
-
-# Plot membership functions
-fuzzy_system.plot_membership_functions(ax1)
-ax1.set_title("Membership Functions")
-
-# Plot current input values
-fuzzy_system.plot_current_values(distance, angle, steering_angle, ax2)
-ax2.set_title("Current Values")
-
-st.pyplot(fig)
+if "error" in result:
+    st.error(result["error"])
+else:
+    st.write(f"Recommended Area: {result['recommended_area_text']}")
+    st.write(f"Estimated Waiting Time: {result['waiting_time_text']}")
 
 # Add explanation
 st.markdown("""
 ### How it works
-This system uses fuzzy logic to determine the optimal steering angle for parking.
-- **Distance**: How far the car is from the parking spot
-- **Angle**: The approach angle of the car
-- **Steering Angle**: The calculated optimal steering angle for parking
+This system uses fuzzy logic to determine the optimal parking area and estimate waiting times based on:
+- **Traffic Density**: Current traffic conditions
+- **Time of Day**: Current time
+- **Weather Condition**: Current weather
+- **Vacancy Rate**: Available parking spaces
+- **User Type**: Type of user (Regular, Member, VIP, etc.)
 """) 
