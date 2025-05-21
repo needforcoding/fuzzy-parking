@@ -27,6 +27,15 @@ st.markdown("""
         padding: 1rem;
         border-radius: 0.5rem;
     }
+    .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: #f0f2f6;
+        padding: 1rem;
+        text-align: center;
+        border-top: 1px solid #e6e6e6;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -148,6 +157,36 @@ if calculate_button:
                 }[user_type]
                 st.write(f"**User Type:** {user_type_text}")
 
+            # Add visualization section
+            st.subheader("System Visualization")
+            viz_col1, viz_col2 = st.columns(2)
+            
+            with viz_col1:
+                st.markdown("### Membership Functions")
+                # Create a figure for membership functions
+                fig1, ax1 = plt.subplots(figsize=(10, 6))
+                fuzzy_system._define_input_membership_functions()
+                fuzzy_system._define_output_membership_functions()
+                # Plot membership functions
+                for var in [fuzzy_system.traffic_density, fuzzy_system.time_of_day, 
+                          fuzzy_system.weather_condition, fuzzy_system.vacancy_rate]:
+                    for term in var.terms:
+                        ax1.plot(var.universe, var[term].mf, label=f"{var.label} - {term}")
+                ax1.legend()
+                ax1.set_title("Input Membership Functions")
+                st.pyplot(fig1)
+            
+            with viz_col2:
+                st.markdown("### Output Membership Functions")
+                # Create a figure for output membership functions
+                fig2, ax2 = plt.subplots(figsize=(10, 6))
+                for var in [fuzzy_system.recommended_area, fuzzy_system.waiting_time]:
+                    for term in var.terms:
+                        ax2.plot(var.universe, var[term].mf, label=f"{var.label} - {term}")
+                ax2.legend()
+                ax2.set_title("Output Membership Functions")
+                st.pyplot(fig2)
+
 # Add explanation
 with st.expander("How it works"):
     st.markdown("""
@@ -165,4 +204,18 @@ with st.expander("How it works"):
     3. View the results below
     
     The system will recommend the best parking area and provide an estimated waiting time based on your inputs.
-    """) 
+    
+    ### Features:
+    - Real-time fuzzy logic calculations
+    - Visual representation of membership functions
+    - Detailed input and output analysis
+    - User-friendly interface
+    - Responsive design
+    """)
+
+# Add footer
+st.markdown("""
+    <div class="footer">
+        Made with ❤️ by <a href="https://github.com/needforcoding" target="_blank">needforcoding</a>
+    </div>
+""", unsafe_allow_html=True) 
