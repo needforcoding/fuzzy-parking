@@ -137,3 +137,15 @@ The system uses the following process to generate recommendations:
 ## Acknowledgements
 
 This project was developed as an educational demonstration of fuzzy logic control systems.
+
+## Online Demo
+
+You can try the Fuzzy Parking System online without installing anything on your computer. Just visit our Streamlit demo:
+[Online Demo Link] ([Streamlit Cloud'tan alacağınız linki buraya ekleyin](https://fuzzy-parking.streamlit.app/))
+
+The online demo allows you to:
+
+- Adjust the distance and angle parameters using interactive sliders
+- See the calculated steering angle in real-time
+- View the membership functions and current values visualization
+- Understand how the fuzzy logic system works
