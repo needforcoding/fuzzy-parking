@@ -69,8 +69,8 @@ The project requires the following Python packages:
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/fuzzy-parking-guidance.git
-   cd fuzzy-parking-guidance
+   git clone https://github.com/needforcoding/fuzzy-parking.git
+   cd fuzzy-parking
    ```
 
 2. Install the required packages:
