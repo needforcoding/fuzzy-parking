@@ -141,7 +141,7 @@ This project was developed as an educational demonstration of fuzzy logic contro
 ## Online Demo
 
 You can try the Fuzzy Parking System online without installing anything on your computer. Just visit our Streamlit demo:
-[Online Demo Link] (https://fuzzy-parking.streamlit.app/)
+[Online Demo](https://fuzzy-parking.streamlit.app/)
 
 The online demo allows you to:
 
