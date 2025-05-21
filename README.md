@@ -1,4 +1,5 @@
-# Fuzzy Logic Parking Guidance System
+# Fuzzy Logic Parking Guidance System 
+# ** Ahmet Feyzi Gülmez **
 
 A Python-based fuzzy logic control system for recommending optimal parking areas and estimating waiting times based on multiple input factors like traffic density, time of day, weather conditions, vacancy rate, and user type.
 
